@@ -87,13 +87,13 @@
           e.preventDefault();
           const email = document.getElementById("email").value;
           const BACKEND_URL = "https://vitraga-assignment.onrender.com/api/signup";
-          await fetch(BACKEND_URL, {
+          const res = await fetch(BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
           });
 
-          alert("Email registered successfully!");
+          alert(res.message);
         });
     </script>
   </body>

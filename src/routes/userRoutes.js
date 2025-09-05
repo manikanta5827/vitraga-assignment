@@ -41,7 +41,7 @@ router.post('/signup', async (req, res) => {
 
         res.status(201).json({
             status: "success",
-            message: 'Email saved successfully',
+            message: 'Email registered successfully',
             data
         });
     } catch (error) {
