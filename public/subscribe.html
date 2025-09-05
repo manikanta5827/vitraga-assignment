@@ -76,7 +76,10 @@
           placeholder="Enter your email"
           required
         />
-        <button type="submit">Subscribe</button>
+        <button type="submit" id="submitBtn">
+          <span id="btnText">Subscribe</span>
+          <span id="loadingSpinner" style="display: none">Subscribing...</span>
+        </button>
       </form>
     </div>
 
@@ -87,6 +90,14 @@
           e.preventDefault();
           const email = document.getElementById("email").value;
           const BACKEND_URL = "https://vitraga-assignment.onrender.com/api/signup";
+
+          const submitBtn = document.getElementById("submitBtn");
+          const btnText = document.getElementById("btnText");
+          const loadingSpinner = document.getElementById("loadingSpinner");
+
+          submitBtn.disabled = true;
+          btnText.style.display = "none";
+          loadingSpinner.style.display = "inline";
 
           try {
             const res = await fetch(BACKEND_URL, {
@@ -106,6 +117,10 @@
           } catch (error) {
             console.error("Error:", error);
             alert("Network error. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            btnText.style.display = "inline";
+            loadingSpinner.style.display = "none";
           }
         });
     </script>

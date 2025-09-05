@@ -39,6 +39,8 @@ router.post('/signup', async (req, res) => {
 
         if (error) throw error;
 
+        await sendEmail(email, "successfully subscribed","successfully subscribed to github events, you will get daily mails on 9AM")
+
         res.status(201).json({
             status: "success",
             message: 'Email registered successfully',
