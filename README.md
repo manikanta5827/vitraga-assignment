@@ -38,7 +38,9 @@ A simple web service that allows users to subscribe to daily GitHub events updat
 
 1. Users visit the web page and enter their email
 2. Email is stored in Supabase database
-3. Cron job runs daily at 9 AM
+3. To send GitHub updates to users there are 2 ways:
+   - **Manual Trigger**: Use the `/api/send-updates` endpoint
+   - **Automatic**: Cron job runs daily at 9 AM
 4. Fetches latest GitHub events from API
 5. Sends formatted email to all subscribers
 
