@@ -27,7 +27,7 @@ A simple web service that allows users to subscribe to daily GitHub events updat
    ```
 
 4. **Access the app**
-   - Web interface: `http://localhost:3900`
+   - Web interface: `https://vitraga-assignment.onrender.com`
 
 ## API Endpoints
 

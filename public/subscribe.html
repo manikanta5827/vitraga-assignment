@@ -86,7 +86,7 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
           const email = document.getElementById("email").value;
-          const BACKEND_URL = "http://localhost:3900/api/signup";
+          const BACKEND_URL = "https://vitraga-assignment.onrender.com/api/signup";
           await fetch(BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
