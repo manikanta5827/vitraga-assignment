@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 const fetchGitHubEvents = require('../service/githubService');
-const  sendEmail = require('../service/emailService.js');
+const sendEmail = require('../service/emailService.js');
 
-router.post('/signup', async (req,res)=>{
+router.post('/signup', async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -21,9 +21,11 @@ router.post('/signup', async (req,res)=>{
             .select('email')
             .eq('email', email)
             .single();
-        
-        if(checkError) throw checkError;
-        
+
+        if (checkError && checkError.code !== 'PGRST116') {
+            throw checkError;
+        }
+
         if (existingUser) {
             return res.status(409).json({
                 status: "error",
@@ -51,7 +53,7 @@ router.post('/signup', async (req,res)=>{
     }
 });
 
-router.post('/send-updates', async (req,res) => {
+router.post('/send-updates', async (req, res) => {
     try {
         const { data: users, error } = await supabase.from('users').select('email');
 
@@ -86,4 +88,4 @@ router.post('/send-updates', async (req,res) => {
 });
 
 
-module.exports =  router;
+module.exports = router;
