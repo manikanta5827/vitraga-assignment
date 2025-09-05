@@ -32,6 +32,7 @@ A simple web service that allows users to subscribe to daily GitHub events updat
 ## API Endpoints
 
 - `POST /api/signup` - Subscribe with email
+- `POST /api/unsubscribe` - Unsubscribe with email
 - `POST /api/send-updates` - Manually trigger email updates
 
 ## How it Works

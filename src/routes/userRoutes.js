@@ -39,14 +39,13 @@ router.post('/signup', async (req, res) => {
 
         if (error) throw error;
 
-        sendEmail(email, "successfully subscribed","successfully subscribed to github events, you will get daily mails on 9AM")
-        .then(res=>console.log(res))
-        .catch(err=>console.log(err));
+        sendEmail(email, "successfully subscribed", "successfully subscribed to github events, you will get daily mails on 9AM")
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
 
         res.status(201).json({
             status: "success",
-            message: 'Email registered successfully',
-            data
+            message: 'Email registered successfully'
         });
     } catch (error) {
         res.status(500).json({
@@ -56,6 +55,60 @@ router.post('/signup', async (req, res) => {
         });
     }
 });
+
+router.post('/unsubscribe', async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                status: "error",
+                message: 'Email is required'
+            });
+        }
+
+        // check if this email is already exists
+        const { data: existingUser, error: checkError } = await supabase
+            .from('users')
+            .select('email')
+            .eq('email', email)
+            .single();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+            throw checkError;
+        }
+
+        if (!existingUser) {
+            return res.status(404).json({
+                status: "error",
+                message: 'Email not found'
+            });
+        }
+
+        // delete the user
+        const { error: deleteError } = await supabase
+            .from('users')
+            .delete()
+            .eq('email', email);
+
+        if (deleteError) throw deleteError;
+
+        sendEmail(email, "successfully un-subscribed", "successfully un-subscribed to github events")
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+
+        res.status(200).json({
+            status: "success",
+            message: 'Successfully unsubscribed'
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            message: "something went wrong",
+            error: error.message
+        })
+    }
+})
 
 router.post('/send-updates', async (req, res) => {
     try {

@@ -20,7 +20,7 @@ async function sendEmail(to, subject, text) {
     subject,
     text,
   });
-  console.log(`Email sent to ${to}`);
+  return `Email sent to ${to}`;
 }
 
 module.exports = sendEmail;
