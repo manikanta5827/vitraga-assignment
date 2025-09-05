@@ -87,13 +87,26 @@
           e.preventDefault();
           const email = document.getElementById("email").value;
           const BACKEND_URL = "https://vitraga-assignment.onrender.com/api/signup";
-          const res = await fetch(BACKEND_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email }),
-          });
 
-          alert(res.message);
+          try {
+            const res = await fetch(BACKEND_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+              alert(data.message || "Email registered successfully!");
+              document.getElementById("email").value = "";
+            } else {
+              alert(`Error: ${data.message || "Something went wrong"}`);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Network error. Please try again.");
+          }
         });
     </script>
   </body>
