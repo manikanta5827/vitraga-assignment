@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const supabase = require('../config/supabase.js');
-const { fetchGitHubEvents } = require('../service/githubService.js');
-const { sendEmail } = require('../service/emailService.js');
+const fetchGitHubEvents = require('../service/githubService.js');
+const sendEmail = require('../service/emailService.js');
 
 
 cron.schedule('* 9 * * *', async () => {
